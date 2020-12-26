@@ -49,7 +49,7 @@ class LaplacianRegularizer(nn.Module):
 class ContentLoss(nn.Module):
     def __init__(self):
         super(ContentLoss, self).__init__()
-        self.extractor = network.Vgg19()
+        self.extractor = network.Vgg19().eval()
         self.l2_criterion = nn.MSELoss()
         
     def forward(self, output, content):
@@ -68,7 +68,7 @@ class ContentLoss(nn.Module):
 class StyleLoss(nn.Module):
     def __init__(self):
         super(StyleLoss, self).__init__()
-        self.extractor = network.Vgg19()
+        self.extractor = network.Vgg19().eval()
         self.l2_criterion = nn.MSELoss()
         
     def forward(self, output, style):

@@ -225,7 +225,7 @@ class StyleNetwork(nn.Module):
     def __init__(self, size=256):
         super(StyleNetwork, self).__init__()
         self.size = size
-        self.extractor = blocks.Vgg19()
+        self.extractor = blocks.Vgg19().eval()
         self.splat1 = blocks.SplatBlock(64, 8)
         self.splat2 = blocks.SplatBlock(8, 16)
         self.splat3 = blocks.SplatBlock(16, 32)
