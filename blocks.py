@@ -13,10 +13,12 @@ class SplatBlock(nn.Module):
             nn.Conv2d(ch_in, ch_out, 3, stride=2, padding=1),
             nn.ReLU(inplace=True))
         self.conv_out = nn.Sequential(
-            nn.Conv2d(ch_out * 16 + ch_out, ch_out, 1, stride=1),
+            nn.Conv2d(ch_out * 16 + ch_out, ch_out, 3, stride=1, padding=1),
             nn.ReLU(inplace=True))
 
     def forward(self, feat_c, feat_s, feat_adain):
+        # print("*" * 10)
+        # print(f"feat_c mean{feat_c.mean()}, feat_s mean {feat_s.mean()} feat_adain mean {feat_adain.mean()}")
         feat_s = self.conv_in(feat_s)
         feat_c = self.conv_in(feat_c)
         # print(feat_c.size(), feat_s.size())
@@ -24,6 +26,10 @@ class SplatBlock(nn.Module):
         # print(feat_norm.size(), feat_adain.size())
         output = torch.cat([feat_norm, feat_adain], dim=1)
         output = self.conv_out(output)
+        # feat_s = adaptive_instance_norm(feat_s, feat_s)
+        # print(f"output mean{output.mean()}, feat_s mean {feat_s.mean()} ")
+        # print("*" * 10)
+
         return output, feat_s
 
 
